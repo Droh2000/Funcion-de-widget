@@ -73,16 +73,17 @@ class MyApp extends StatelessWidget {
               fontS: 20),
           const Padding(padding: EdgeInsets.only(top: 25)),*/
           // CREAR BOTON (Puede dar error si nos salimos de los limites)
-          Directionality(
+          /*Directionality(
             textDirection: TextDirection.ltr,
             child: ElevatedButton(
               // Funcion anonima
               onPressed: () {
-                print("Hola");
+                print("Dedddeeddedded");
               },
               child: const Text("Agregar a favoritos"),
             ),
-          )
+          )*/
+          BotonAgregar()
         ],
       ),
     );
@@ -146,3 +147,43 @@ class TextoPersonal extends StatelessWidget {
 
 // Hacer:
 // Comit en github
+
+// Creacion de Satefull Widget
+class BotonAgregar extends StatefulWidget {
+  const BotonAgregar({super.key});
+
+  @override
+  State<BotonAgregar> createState() => _BotonAgregarState();
+}
+
+// En la clase State es en la que se trabaja
+class _BotonAgregarState extends State<BotonAgregar> {
+  bool guardado = false;
+  @override
+  Widget build(BuildContext context) {
+    var boton = guardado
+        ? ElevatedButton(
+            onPressed: manejadorBoton,
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+            child: const Text(
+                "Quitar favorito"), // Child debe er siempre el ultimo parametro del widget
+          )
+        : ElevatedButton(
+            onPressed: manejadorBoton,
+            style:
+                ElevatedButton.styleFrom(backgroundColor: Colors.greenAccent),
+            child: const Text("Agregar favorito"),
+          );
+    return Directionality(
+      textDirection: TextDirection.ltr,
+      child: boton,
+    );
+  }
+
+  void manejadorBoton() {
+    // Cannvio de estado al hacer lcick en el boton
+    setState(() {
+      guardado = !guardado;
+    });
+  }
+}
